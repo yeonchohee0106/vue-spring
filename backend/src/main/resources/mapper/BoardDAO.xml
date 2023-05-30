@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+    <mapper namespace="com.example.backend.mapper.BoardDAO">
+        <select id="selectListBoard" parameterType="java.util.HashMap" resultType="com.example.backend.vo.BoardDataVO" >
+            SELECT * FROM t_board_data 
+            WHERE 1=1
+            <if test="searchId != null and searchId != ''">
+                AND UPPER(id) LIKE '%' || UPPER(#{searchId}) || '%'
+            </if>
+            <if test="searchTitle != null and searchTitle != ''">
+                AND UPPER(title) LIKE '%' || UPPER(#{searchTitle}) || '%'
+            </if>
+            LIMIT 10 
+        </select>
+
+        <select id="selectBoardById" parameterType="com.example.backend.vo.BoardDataVO" resultType="com.example.backend.vo.BoardDataVO">
+            SELECT *
+            FROM t_board_data
+            WHERE id = #{id}
+        </select>
+    </mapper>
